@@ -1,0 +1,17 @@
+body {
+    color: white;
+    background-image: url(img/star-wars-backgrounds-06.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    font-family: 'Poller One', cursive;
+}
+.container {
+    /* display: flex;
+    justify-content: center; */
+    text-align: center;
+    background-color: black;
+    margin: 0 auto;
+    width: 50%;
+    padding: 5px 5px 10px 5px;
+}
