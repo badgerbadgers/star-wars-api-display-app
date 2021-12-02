@@ -1,17 +1,39 @@
 body {
-    color: white;
+    color: #37394f;
     background-image: url(img/star-wars-backgrounds-06.jpeg);
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
+}
+h1 {
     font-family: 'Poller One', cursive;
 }
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+}
+h3, p {
+    font-family: 'Montserrat', sans-serif;
+}
 .container {
-    /* display: flex;
-    justify-content: center; */
-    text-align: center;
-    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 700px;
     margin: 0 auto;
-    width: 50%;
     padding: 5px 5px 10px 5px;
+}
+button {
+    font-family: 'Montserrat', sans-serif;
+    color: #ffffff;
+    background-color: red;
+}
+.child {
+
+    text-align: center;
+    background-color: #FBAB7E;
+    background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
+    width: 50%;
+    height: 400px;
 }

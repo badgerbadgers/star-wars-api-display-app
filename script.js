@@ -1,44 +1,23 @@
-// function getData() {
-//   fetch('https://swapi.dev/api/people/1')
-//     .then(response => response.json())
-//   console.log(data)
-// }
-// // getData();
+/* function that gets API data, 
+on call of function it generates a number between 1 and 83 */
+
 async function getData() {
-    const url = 'https://swapi.dev/api/people/1';
+    /* Generate a random number between 1 and 83 */
+let randomNum = Math.floor(Math.random() * 83) + 1;
+    const url = `https://swapi.dev/api/people/${randomNum}`;
+    /* uses fetch method to get api data then json to  */
     try {
         let res = await fetch(url)
         return await res.json();
     } catch(error) {
         console.log(error);
     }
-//     // let response = await fetch('https://swapi.dev/api/people/1');
-//     // let data = await response.text();
 }
-getData();
-
-// function mapData() {
-//     let stuff = getData();
-//     console.log(stuff);
-// }
-// function displayData() {
-//     let characters = getData();
-//     let text = '';
-
-//     characters.forEach(character => {
-//         console.log(character)
-//         let textInfo = 
-//         `
-//           <div class="character">
-//           <h2>Your character is:</h2>
-//             <h3>${character.name}</h3>
-//           </div>
-//         `;
-//         text += textInfo;
-//     });
-//     let container = document.querySelector('.container');peopp
-//     container.innerHTML = html;
-// }
+function handleClick(event) {
+    event.preventDefault();
+    alert('hi')
+}
+/* function that will display API data to the webpage. uses object */
 async function renderUsers() {
     let user = await getData()
     console.log(user)
@@ -46,15 +25,16 @@ async function renderUsers() {
 
     let html = '';
     let htmlSegment = `
-    <div class="wrapper">
+    <div class="child">
     <div class="user">
-    <h2>Character Spotlight:<h2>
-                            <h3> ${user.name}</h3>
-                            <p>Birth year: ${user.birth_year}</p>
-                            <p>Hair color: ${user.hair_color}</p>
-                            <p>Eye color: ${user.eye_color}</p>
-                            <p>Height: ${user.height}cm</p>
-                            <p>Gender: ${user.gender}</p>
+    <h1>Character Spotlight:<h1>
+                            <h2> ${user.name}</h2>
+                            <h3>Birth year: ${user.birth_year}</h3>
+                            <h3>Hair color: ${user.hair_color}</h3>
+                            <h3>Eye color: ${user.eye_color}</h3>
+                            <h3>Height: ${user.height}cm</h3>
+                            <h3>Gender: ${user.gender}</h3>
+                            <button>Generate New Character</button>
                         </div>
                         </div>
                         `;
@@ -64,6 +44,8 @@ async function renderUsers() {
     container.innerHTML = html;
     };
 
-  
+  document.addEventListener('click', function () {
+      renderUsers();
+  })
 
 renderUsers();
