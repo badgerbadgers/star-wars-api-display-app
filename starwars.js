@@ -29,52 +29,49 @@ async function createCharacterIndex(){
 */
 
 /* Generates a random number to get 1 of the 83 of Star Wars characters in API data. 
-Fetches API data using constructed URL or passed URL. 
-*/
+Fetches API data using constructed URL or passed URL. */
 async function getData(selectedUrl) {
-    let randomNum = Math.floor(Math.random() * 83) + 1;
-    const url = selectedUrl ? selectedUrl : `https://swapi.dev/api/people/${randomNum}`
-    try {
-        let res = await fetch(url)
-        return await res.json();
+  let randomNum = Math.floor(Math.random() * 83) + 1;
+  const url = selectedUrl ? selectedUrl : `https://swapi.dev/api/people/${randomNum}`
+  try {
+    let res = await fetch(url)
+    return await res.json();
     } catch(error) {
-        console.log(error);
+    console.log(error);
     }
  }
 
-
- /* Gets API data and renders character  */
- async function renderCharacter(data) {
-    //const characterIndex = await createCharacterIndex()
-    const character = await getData()
-    const homeworld = await getData(character.homeworld)
-    const filmUrls = character.films
-    const filmList = []
-    /* uses film urls from API data to get and render name of each residents' homeworld, 
-    each resident name is
-    seprated by commas */
-    for (const filmUrl of filmUrls) {
-      const film = await getData(filmUrl)
-      filmList.push(film.title)
+/* Gets API data and renders character  */
+async function renderCharacter(data) {
+  //const characterIndex = await createCharacterIndex()
+  const character = await getData();
+  const homeworld = await getData(character.homeworld);
+  const filmUrls = character.films
+  const filmList = [];
+  /* uses film urls from API data to get and render name of each residents' homeworld, 
+  each resident name is separated by commas */
+  for (const filmUrl of filmUrls) {
+    const film = await getData(filmUrl)
+    filmList.push(film.title)
     }
-      const films = filmList.join(", ");
-      characterHtmlSegment =
-        `
-        <div class="child">
-          <h1>Character Spotlight<h1>
-            <h2>${character.name}</h2>
-              <h3>Height: <span class="bodyText">${character.height}cm</span></h3>
-              <h3>Mass: <span class="bodyText">${character.mass}kg</span><h3>
-              <h3>Birth year: <span class="bodyText">${character.birth_year}</span></h3>
-              <h3>Hair color: <span class="bodyText">${character.hair_color}</span></h3>
-              <h3>Skin color: <span class="bodyText">${character.skin_color}</span></h3>
-              <h3>Eye color: <span class="bodyText">${character.eye_color}</span></h3>
-              <h3>Gender: <span class="bodyText">${character.gender}</span></h3>
-              <h3>Films: <span class="bodyText">${films}</span></h3>
-              <h3 onClick="renderHomeworld('${character.name}','${character.homeworld}')">Homeworld: <span class="bodyText link">${homeworld.name}</span></h3>
-            <button onClick="renderCharacter()">Generate New Character</button>
-        </div>
-        `;
+  const films = filmList.join(", ");
+  characterHtmlSegment =
+    `
+      <div class="child">
+        <h1>Character Spotlight<h1>
+        <h2>${character.name}</h2>
+        <h3>Height: <span class="bodyText">${character.height}cm</span></h3>
+        <h3>Mass: <span class="bodyText">${character.mass}kg</span><h3>
+        <h3>Birth year: <span class="bodyText">${character.birth_year}</span></h3>
+        <h3>Hair color: <span class="bodyText">${character.hair_color}</span></h3>
+        <h3>Skin color: <span class="bodyText">${character.skin_color}</span></h3>
+        <h3>Eye color: <span class="bodyText">${character.eye_color}</span></h3>
+        <h3>Gender: <span class="bodyText">${character.gender}</span></h3>
+        <h3>Films: <span class="bodyText">${films}</span></h3>
+        <h3 onClick="renderHomeworld('${character.name}','${character.homeworld}')">Homeworld: <span class="bodyText link">${homeworld.name}</span></h3>
+      <button onClick="renderCharacter()">Generate New Character</button>
+      </div>
+    `;
     if (character.name === "unknown" || character.name === undefined) {
       renderCharacter()
     } else {
