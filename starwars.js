@@ -3,12 +3,13 @@
 
 /* variable for container */
 const container = document.querySelector('.container');
-/* Html Segments */
+
+/* html Segments */
 let characterHtmlSegment = ''
-let characterIndex = ['Luke Skywalker', 'C-3PO', 'R2-D2', 'Darth Vader', 'Leia Organa', 'Owen Lars', 'Beru Whitesun lars', 'R5-D4', 'Biggs Darklighter', 'Obi-Wan Kenobi', 'Anakin Skywalker', 'Wilhuff Tarkin', 'Chewbacca', 'Han Solo', 'Greedo', 'Jabba Desilijic Tiure', undefined, 'Wedge Antilles', 'Jek Tono Porkins', 'Yoda', 'Palpatine', 'Boba Fett', 'IG-88', 'Bossk', 'Lando Calrissian', 'Lobot', 'Ackbar', 'Mon Mothma', 'Arvel Crynyd', 'Wicket Systri Warrick', 'Nien Nunb', 'Qui-Gon Jinn', 'Nute Gunray', 'Finis Valorum', 'Padmé Amidala', 'Jar Jar Binks', 'Roos Tarpals', 'Rugor Nass', 'Ric Olié', 'Watto', 'Sebulba', 'Quarsh Panaka', 'Shmi Skywalker', 'Darth Maul', 'Bib Fortuna', 'Ayla Secura', 'Ratts Tyerel', 'Dud Bolt', 'Gasgano', 'Ben Quadinaros', 'Mace Windu', 'Ki-Adi-Mundi', 'Kit Fisto', 'Eeth Koth', 'Adi Gallia', 'Saesee Tiin', 'Yarael Poof', 'Plo Koon', 'Mas Amedda', 'Gregar Typho', 'Cordé', 'Cliegg Lars', 'Poggle the Lesser', 'Luminara Unduli', 'Barriss Offee', 'Dormé', 'Dooku', 'Bail Prestor Organa', 'Jango Fett', 'Zam Wesell', 'Dexter Jettster', 'Lama Su', 'Taun We', 'Jocasta Nu', 'R4-P17', 'Wat Tambor', 'San Hill', 'Shaak Ti', 'Grievous', 'Tarfful', 'Raymus Antilles', 'Sly Moore', 'Tion Medon']
 let homeworldHtmlSegment = ''
 let filmHtmlSegment = ''
 
+/* function that renders previous data shown on screen */
 function renderPreviousData(htmlSegment){
 	container.innerHTML = htmlSegment;
 }
@@ -27,7 +28,9 @@ async function createCharacterIndex(){
 }
 */
 
-/* Generates a random number to get 1 of the 83 of Star Wars characters in API data. Fetches API data using constructed URL or passed URL. */
+/* Generates a random number to get 1 of the 83 of Star Wars characters in API data. 
+Fetches API data using constructed URL or passed URL. 
+*/
 async function getData(selectedUrl) {
     let randomNum = Math.floor(Math.random() * 83) + 1;
     const url = selectedUrl ? selectedUrl : `https://swapi.dev/api/people/${randomNum}`
@@ -38,23 +41,24 @@ async function getData(selectedUrl) {
         console.log(error);
     }
  }
-/*
+
 
  /* Gets API data and renders character  */
  async function renderCharacter(data) {
-// 	const characterIndex = await createCharacterIndex()
+    //const characterIndex = await createCharacterIndex()
     const character = await getData()
     const homeworld = await getData(character.homeworld)
     const filmUrls = character.films
     const filmList = []
-    /* uses film urls from API data to get and render name of each residents' homeworld, each resident name is
+    /* uses film urls from API data to get and render name of each residents' homeworld, 
+    each resident name is
     seprated by commas */
     for (const filmUrl of filmUrls) {
       const film = await getData(filmUrl)
       filmList.push(film.title)
     }
-  const films = filmList.join(", ");
-    characterHtmlSegment =
+      const films = filmList.join(", ");
+      characterHtmlSegment =
         `
         <div class="child">
           <h1>Character Spotlight<h1>
@@ -78,57 +82,44 @@ async function getData(selectedUrl) {
     }
 };
   
-/* Renders homeworld data if known. Formats population number with commas. */
- async function renderHomeworld(characterName, homeworldUrl) {
-   const homeworld = await getData(homeworldUrl)
-   const residentUrls = homeworld.residents
-   const residentList= []
-   for (const resUrl of residentUrls) {
-     let resident = await getData(resUrl)
-     residentList.push(resident.name)
+/* Renders homeworld data if known. */
+async function renderHomeworld(characterName, homeworldUrl) {
+  const homeworld = await getData(homeworldUrl)
+  const residentUrls = homeworld.residents
+  const residentList= [];
+  /* for of loops through array of residenturls 
+  calls getData with endpoint of homeworld.url, gets resident.name value
+  pushes resident.name string to residentList an empty array then after all values pushed
+  there will a join method to add ',' to each resident in the list
+  */
+  for (const resUrl of residentUrls) {
+    let resident = await getData(resUrl);
+    residentList.push(resident.name);
    }
-   const residents = residentList.join(', ')   
-/*
+   const residents = residentList.join(', ');   
+  /*
    const resIdx = []
    const residentLink = residentList.map((resident, i) => {
 	   resIdx.push({i: resident})
    })
    const residentLinkHtmlSegment = `<li onClick="get()">${residentLink}</li>`
-*/
-
+  */
   homeworldHtmlSegment =
-         `
-         <div class="child">
-           <h1>Homeworld<h1>
-             <h2>${homeworld.name}</h2>
-             <h3>Climate: <span class="bodyText">${homeworld.climate}</span></h3>
-             <h3>Terrain: <span class="bodyText">${homeworld.terrain}</span></h3>
-             <h3>Residents: <span class="bodyText">${residents}</span></h3>
-             <button onClick="renderCharacter()">Generate New Character</button>
-             <button onClick="renderPreviousData(characterHtmlSegment)">Back</button>
-         </div>
-         `;
-
+    `
+    <div class="child">
+      <h1>Homeworld<h1>
+        <h2>${homeworld.name}</h2>
+        <h3>Climate: <span class="bodyText">${homeworld.climate}</span></h3>
+        <h3>Terrain: <span class="bodyText">${homeworld.terrain}</span></h3>
+        <h3>Residents: <span class="bodyText">${residents}</span></h3>
+      <button onClick="renderCharacter()">Generate New Character</button>
+      <button onClick="renderPreviousData(characterHtmlSegment)">Back</button>
+    </div>
+    `;
      container.innerHTML = homeworldHtmlSegment;
 };
-  
-/* Renders film data if known. */
-async function renderFilms(selectedUrl, characterName) {
-  const films = await getData(selectedUrl)
-  filmHtmlSegment = `
-        <div class="childContainer">
-          <h1>${characterName} Films<h1>
-            <h2></h2>
-            ${filmHtmlSegment}
-            <div class="userData">
-              <button onClick="renderCharacter()">Generate New Character</button>
-            </div>
-        </div>
-   `;
-   container.innerHTML = filmHtmlSegment;
-}  
 
- /* calls render characters function on page load*/
- renderCharacter();
+/* calls render characters function on page load*/
+renderCharacter();
 
  
